@@ -1,0 +1,1 @@
+./gradlew jsBrowserProductionLibraryDistribution && cd build/js/packages/@kjt/testing &&   npm link &&   cd - &&   npm link @kjt/testing &&   node_modules/ts-node/dist/bin.js src/jsMain/kotlin/testing/main.ts

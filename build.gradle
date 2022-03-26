@@ -1,5 +1,5 @@
 plugins {
-    id 'org.jetbrains.kotlin.js' version '1.6.10'
+    id 'org.jetbrains.kotlin.multiplatform' version '1.6.20-RC2'
 }
 
 group 'org.example'
@@ -9,16 +9,26 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
-    testImplementation "org.jetbrains.kotlin:kotlin-test-js"
-}
 
 kotlin {
     js(IR) {
         moduleName = "@kjt/testing"
+        compilations["main"].packageJson {
+            customField("main", "kotlin/testing.js")
+            customField("types", "kotlin/testing.d.ts")
+        }
         browser()
         binaries.library()
+    }
+    sourceSets {
+        all {
+            languageSettings.optIn("kotlin.RequiresOptIn")
+        }
+        jsMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+            }
+        }
     }
 }
 
@@ -26,6 +36,3 @@ kotlin {
 rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin) {
     rootProject.getExtensions().getByType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension).nodeVersion = "16.0.0"
 }
-//rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    //rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion = "16.0.0"
-//}

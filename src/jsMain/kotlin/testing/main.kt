@@ -1,5 +1,7 @@
 @file:OptIn(ExperimentalJsExport::class)
 
+package testing
+
 val dynamicNull: dynamic = null
 
 class NonExported {
