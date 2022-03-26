@@ -1,0 +1,31 @@
+plugins {
+    id 'org.jetbrains.kotlin.js' version '1.6.10'
+}
+
+group 'org.example'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-js"
+}
+
+kotlin {
+    js(IR) {
+        moduleName = "@kjt/testing"
+        browser()
+        binaries.library()
+    }
+}
+
+// Required by M1 for now (no node build for v14 on M1)
+rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin) {
+    rootProject.getExtensions().getByType(org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension).nodeVersion = "16.0.0"
+}
+//rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
+    //rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion = "16.0.0"
+//}
