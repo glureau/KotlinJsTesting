@@ -2,30 +2,15 @@
 
 package testing
 
-val dynamicNull: dynamic = null
-
-class NonExported {
-    val goo = 12
-}
+class NonExportedClass { val someData = 12 }
 
 @JsExport
-class Foo(data1: String, data2: String){
-    internal lateinit var common: NonExported
+class Foo {
+    internal lateinit var nec: NonExportedClass
 
     init {
-        if (data1 != dynamicNull) {
-            common = NonExported()
-        }
+        nec = NonExportedClass()
     }
 
-    val exposedValue: Int
-        get() = common.goo
-
-    internal constructor(common: NonExported): this(dynamicNull?.dynamicCastTo<String>(), dynamicNull?.dynamicCastTo<String>()) {
-        this.common = common
-    }
+    val exposedValue: Int get() = nec.someData
 }
-
-@JsExport
-fun buildTestingKT() = Foo(NonExported()) // internal constructor
-
